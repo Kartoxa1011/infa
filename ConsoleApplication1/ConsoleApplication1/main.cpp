@@ -186,7 +186,6 @@ public:
 			}
 			deqpoint = deqpoint->next;
 		}
-		newDeq.print();
 		return newDeq;
 	}
 	void concatenation(Deq<T> deq2) // склеивает две очереди
