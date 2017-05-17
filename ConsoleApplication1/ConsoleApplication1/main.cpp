@@ -144,6 +144,7 @@ public:
 		deqpoint = left;
 		while (deqpoint != NULL)
 		{
+			cout << deqpoint->number << ". ";
 			deqpoint->data.show();
 			deqpoint = deqpoint->next;
 		}
@@ -173,10 +174,9 @@ public:
 			}
 		}
 	}
-	Deq<T>& grep(string feature) // разделение по группе или по предмету
+	void grep(string feature, Deq<T>& newDeq) // разделение по группе или по предмету
 	{
 		ELDEQ *deqpoint;
-		Deq<T> newDeq;
 		deqpoint = left;
 		while (deqpoint != NULL)
 		{
@@ -186,12 +186,12 @@ public:
 			}
 			deqpoint = deqpoint->next;
 		}
-		return newDeq;
 	}
 	void concatenation(Deq<T> deq2) // склеивает две очереди
 	{
 		deq2.left->prev = right;
 		right->next = deq2.left;
+		sizedeq += deq2.getSize();
 	}
 	int getSize()
 	{
@@ -250,13 +250,13 @@ private:
 	string name, lastname, info;
 };
 
-/*template <class T>
+template <class T>
 void MyDeque(Deq<T> deq1, Deq<T> deq2, int f)
 {
 	T man1;
 	T man2;
 	int ChSize1 = 0;
-	cout << "\nHow many members in your first Deque have?";
+	cout << "\nHow many members have your first Deque?\n";
 	cin >> ChSize1;
 	cout << "\nEnter first Deque\n";
 	for (int i = 0; i < ChSize1; i++)
@@ -266,7 +266,7 @@ void MyDeque(Deq<T> deq1, Deq<T> deq2, int f)
 	}
 	
 	int ChSize2 = 0;
-	cout << "\nHow many members in your second Deque have?";
+	cout << "\nHow many members have your second Deque?\n";
 	cin >> ChSize2;
 	cout << "\nEnter first Deque\n";
 	for (int i = 0; i < ChSize2; i++)
@@ -274,23 +274,94 @@ void MyDeque(Deq<T> deq1, Deq<T> deq2, int f)
 		man2.setInfo();
 		deq2.addEnd(man1);
 	}
+	int ChMeth = 0;
+	while (ChMeth != 10)
+	{
+		cout << "\nChoose method, which you would like to use for first Deque\n1 - Add new member in the End Deque\n2 - Add new member in the Front Deque\n"
+			<< "3 - Get Left element\n4 - Get Right element\n5 - Delete Left element\n6 - Delete Right element\n7 - Sort Deque\n8 - Select items in other Deque groups or subjects\n"
+			<< "9 - Perform Concatenation with secon Deque\n0 - Print Deque\n10 - Exit\n";
+		cin >> ChMeth;
+		if (ChMeth == 1)
+		{
+			cout << "ChMeth=" << ChMeth << endl;
+			T petr;
+			petr.setInfo();
+			deq1.addEnd(petr);
+		}
+		else if (ChMeth == 2)
+		{
+			cout << "ChMeth=" << ChMeth << endl;
+			T petr;
+			petr.setInfo();
+			deq1.addFront(petr);
+		}
+		else if (ChMeth == 3)
+		{
+			cout << "ChMeth=" << ChMeth << endl;
+			string el1 = deq1.getLeft();
+			cout << "Left element:" << "\n" << el1 << endl;
+		}
+		else if (ChMeth == 4)
+		{
+			cout << "ChMeth=" << ChMeth << endl;
+			string el2 = deq1.getRight();
+			cout << "Right element:" << "\n" << el2 << endl;
+		}
+		else if (ChMeth == 5)
+		{
+			cout << "ChMeth=" << ChMeth << endl;
+			deq1.delFront();
+		}
+		else if (ChMeth == 6)
+		{
+			deq1.delEnd();
+		}
+		else if (ChMeth == 7)
+		{
+			deq1.sort();
+		}
+		else if (ChMeth == 8)
+		{
+			Deq<T> newstud;
+			string feature;
+			cout << "Enter group or subject:";
+			cin >> feature;
+			deq1.grep(feature, newstud);
+			cout << "\nNew Deque:\n";
+			newstud.print();
+		}
+		else if (ChMeth == 9)
+		{
+			deq1.concatenation(deq2);
+			deq1.print();
+		}
+		else if (ChMeth == 0)
+		{
+			cout << "First Deque:" << endl;
+			deq1.print();
+			cout << "Second Deque:" << endl;
+			deq2.print();
+		}
+	}
+	cout << "GOODBYE!!!" << endl;
+}
 
-	cout << "\nChoose method, which you would like to use\n1 - Add new member";
-}*/
+
+void test();
 
 int main()
 {
-	/*int ChTest = 0;
+	int ChTest = 0;
 	cout << "1 - Work with Deque\n2 - Test Deque\nYour choice:";
 	cin >> ChTest;
-	if (ChTest == 1)
+	if (ChTest == 2)
 	{
 		//test(); // функция, вызывающая тест
 	}
-	else if (ChTest == 2)
+	else if (ChTest == 1)
 	{
 		int ChDeq = 0;
-		cout << "\n1 - Student\n2 - Teacher";
+		cout << "\n1 - Student\n2 - Teacher\nYour choice:";
 		cin >> ChDeq;
 		if (ChDeq == 1)
 		{
@@ -304,27 +375,8 @@ int main()
 			int f = 2;
 			Deq<Teacher> nina;
 			Deq<Teacher> artem;
-			MyDeque(nina,artem, f);
+			MyDeque(nina, artem, f);
 		}
-	}*/
-	Deq<Student> stud;
-	Student vitya;
-	for (int i = 0; i < 3; i++)
-	{
-		vitya.setInfo();
-		stud.addEnd(vitya);
 	}
-	Deq<Student> newstud;
-	string feature;
-	cout << "Enter feature:";
-	cin >> feature;
-	newstud = stud.grep(feature);
-	int l = newstud.getSize();
-	cout << "size=" << l << "\n";
-	newstud.print();
-	/*cout << "\n";
-	stud.print();
-	stud.sort();
-	cout << "\n";
-	stud.print();*/
+	
 }
